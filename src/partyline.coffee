@@ -18,7 +18,8 @@ port = process.env.HUBOT_PARTYLINE_PORT || 8879
 module.exports = (robot) ->
   debug = robot.logger.debug
 
-  app = require('coalescent')()
+  coal = require 'coalescent'
+  app = coal()
 
   app.use coal.tattletale()
   app.use coal.courier()

@@ -1,4 +1,4 @@
-# Hubot Partyline
+# Hubot Partyline [![Build Status](https://travis-ci.org/hubot-scripts/hubot-partyline.svg)](https://travis-ci.org/hubot-scripts/hubot-partyline)
 
 Adds peer-to-peer (P2P) partyline support to [Hubot](https://github.com/github/hubot).
 

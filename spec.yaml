@@ -1,0 +1,45 @@
+DHT:
+  - node:
+    - name
+    - hash
+    - peers[node]
+    - users[]:
+      - name
+      - hash
+      - node
+
+Payload:
+  - node
+  - messages[]:
+    - timestamp
+    - hash
+    - data
+    - user
+
+Spec:>
+  Each node will keep a reference to the last 10(?) broadcasts, which it will
+  cross reference with incoming new broadcasts, and filter out any messages that
+  have already been recieved and played back from another node before playing back
+  and new messages to prevent message duplication.
+
+  Nodes will manage incoming/outgoing data through buffered streams. Every 5s
+  a signal will be emitted to broadcast any new heard messages and replay any
+  new recieved broadcast messages.
+
+  [![Build Status](https://travis-ci.org/hubot-scripts/hubot-partyline.svg)](https://travis-ci.org/hubot-scripts/hubot-partyline)
+
+  ## How it works
+
+  To join a partyline network, you must first get the partyline address:port and auth key
+  from another peer. Auth keys will be generated unique to each P2P connection.
+  This means that you will never receive a **direct connection** from an unauthorized
+  peer.
+
+  Once connected to a peer, you will both share a hash table with each other
+  describing any connected peers it has and begin broadcasting. Messages broadcast
+  by remote peers (those you are not directly connected to) will be relayed by a
+  direct peer.
+
+  If you shun any peer, broadcasts from you will no longer be sent to that peer. If
+  you are shunned by a peer, they will still be able to receive your broadcasts.
+  To completely stop communication with a peer, ignore them. This will

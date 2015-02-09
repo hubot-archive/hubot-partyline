@@ -15,11 +15,17 @@
 {inspect} = require 'util'
 port = process.env.HUBOT_PARTYLINE_PORT || 8879
 
+logStub =
+  info: ->
+  error: ->
+  log: ->
+  warn: ->
+
 module.exports = (robot) ->
   debug = robot.logger.debug
 
   coal = require 'coalescent'
-  app = coal()
+  app = coal({ logger: logStub })
 
   app.use coal.tattletale()
   app.use coal.courier()
@@ -42,7 +48,7 @@ module.exports = (robot) ->
   robot.brain.on 'loaded', ->
     robot.logger.debug 'Partyline loaded'
 
-  robot.hear /^(?!hubot ).+/i, (msg) ->
+  robot.hear new RegExp("^(?!#{robot.name} ).+", 'i'), (msg) ->
     user = msg.message.user
     robot.logger.debug "Partyline received message from #{user.name}(#{user.id}): #{msg.match[0]}"
     robot.logger.debug inspect msg.message

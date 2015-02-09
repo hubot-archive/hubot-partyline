@@ -3,4 +3,4 @@
 # bootstrap environment
 source script/bootstrap
 
-coffee test/partyline-test.coffee -p | faucet
+mocha --compilers coffee:coffee-script
